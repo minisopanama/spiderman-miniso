@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MINISO Panamá · Nueva Colección Spider-Man — Acceso anticipado</title>
+<meta name="description" content="Regístrate y sé de los primeros en tener acceso a la Nueva Colección de Spider-Man. Piezas limitadas, sábado 15 de agosto, 10:00 a.m. en MINISO Metromall." />
+<style>
+  :root{
+    --red:#E20613;
+    --red-deep:#FF2A38;
+    --blue:#5B8DEF;
+    --blue-deep:#8FB2FF;
+    --ink:#F5F3EE;
+    --paper:#000000;
+    --card:#141318;
+    --line:#2C2A31;
+    --muted:#A79F94;
+    --ok-bg:#16321D;
+    --ok-fg:#7FDB93;
+    --stamp:#E20613;
+    --focus:#8FB2FF;
+    --overlay:rgba(0,0,0,.85);
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    min-height:100vh;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    padding:40px 16px 80px;
+    text-align:center;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* spiderweb background, radiating out of each corner */
+  .web-bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    overflow:hidden;
+  }
+  .web-bg i{
+    position:absolute;
+    width:62vmin;
+    height:62vmin;
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNTAwIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEuNiIgc3Ryb2tlLW9wYWNpdHk9IjAuMTYiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjUwMCIgeTI9IjAiIC8+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iNTAwIiB5Mj0iMTAwIiAvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjUwMCIgeTI9IjIwMCIgLz48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSI1MDAiIHkyPSIzMDAiIC8+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iNTAwIiB5Mj0iNDAwIiAvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjUwMCIgeTI9IjUwMCIgLz48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSI0MDAiIHkyPSI1MDAiIC8+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMzAwIiB5Mj0iNTAwIiAvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjIwMCIgeTI9IjUwMCIgLz48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIxMDAiIHkyPSI1MDAiIC8+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjUwMCIgLz48cGF0aCBkPSJNNzAsMCBBNzAsNzAgMCAwIDEgMCw3MCIgLz48cGF0aCBkPSJNMTQwLDAgQTE0MCwxNDAgMCAwIDEgMCwxNDAiIC8+PHBhdGggZD0iTTIxMCwwIEEyMTAsMjEwIDAgMCAxIDAsMjEwIiAvPjxwYXRoIGQ9Ik0yODAsMCBBMjgwLDI4MCAwIDAgMSAwLDI4MCIgLz48cGF0aCBkPSJNMzUwLDAgQTM1MCwzNTAgMCAwIDEgMCwzNTAiIC8+PHBhdGggZD0iTTQyMCwwIEE0MjAsNDIwIDAgMCAxIDAsNDIwIiAvPjxwYXRoIGQ9Ik00OTAsMCBBNDkwLDQ5MCAwIDAgMSAwLDQ5MCIgLz48cGF0aCBkPSJNNTYwLDAgQTU2MCw1NjAgMCAwIDEgMCw1NjAiIC8+PC9nPjwvc3ZnPg==");
+    background-repeat:no-repeat;
+    background-size:contain;
+  }
+  .web-bg .tl{ top:-6%; left:-6%; }
+  .web-bg .tr{ top:-6%; right:-6%; transform:scaleX(-1); }
+  .web-bg .bl{ bottom:-6%; left:-6%; transform:scaleY(-1); }
+  .web-bg .br{ bottom:-6%; right:-6%; transform:scale(-1,-1); }
+
+  .page{ width:100%; max-width:640px; position:relative; z-index:1; }
+
+  /* ---------- Header / brand bar ---------- */
+  .brandbar{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
+    color:#fff;
+    border-radius:14px;
+    padding:18px 20px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .brandbar::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: radial-gradient(circle at 20% 120%, rgba(255,255,255,.15), transparent 45%),
+                       radial-gradient(circle at 90% -20%, rgba(255,255,255,.12), transparent 40%);
+    pointer-events:none;
+  }
+  .logo-chip{
+    background:#fff;
+    border-radius:10px;
+    padding:7px 14px;
+    display:inline-flex;
+    align-items:center;
+    line-height:0;
+    position:relative;
+    z-index:1;
+  }
+  .logo-chip img{ height:20px; width:auto; display:block; }
+  .brandbar .tag{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    background:rgba(255,255,255,.18);
+    padding:5px 12px;
+    border-radius:999px;
+    position:relative;
+    z-index:1;
+  }
+
+  .hero{ margin-top:26px; }
+  .stamp-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .stamp{
+    font-size:10.5px;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--stamp);
+    border:1.5px solid var(--stamp);
+    border-radius:4px;
+    padding:4px 9px;
+    transform:rotate(-2deg);
+  }
+  .stamp:nth-child(2){ transform:rotate(1.5deg); }
+  .stamp:nth-child(3){ transform:rotate(-1deg); }
+
+  .eyebrow{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+  }
+  h1{
+    font-size:clamp(28px,6vw,38px);
+    line-height:1.1;
+    margin:8px 0 10px;
+    text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  h1 span{ color:var(--red); }
+  .sub{
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.6;
+    max-width:46ch;
+    margin:0 auto;
+  }
+  .sub b{ color:var(--ink); font-weight:650; }
+
+  .dates{
+    margin:18px auto 0;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .date-pill{
+    font-size:11.5px;
+    font-weight:650;
+    color:var(--ink);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 12px;
+    box-shadow:var(--shadow);
+  }
+  .date-pill b{ color:var(--red); font-weight:750; }
+
+  /* ---------- Countdown ---------- */
+  .countdown{
+    margin-top:22px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .cd-unit{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:12px 14px;
+    min-width:66px;
+  }
+  .cd-num{
+    font-size:22px;
+    font-weight:800;
+    font-variant-numeric:tabular-nums;
+    color:var(--blue);
+    letter-spacing:-.02em;
+  }
+  .cd-label{
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .countdown.live .cd-num{ color:var(--ok-fg); }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:24px;
+    margin-top:22px;
+    text-align:left;
+  }
+  .card h2{
+    font-size:15px;
+    font-weight:700;
+    margin:0 0 4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    text-align:center;
+  }
+  .card h2 .num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:var(--blue);
+    color:#fff;
+    font-size:11px;
+    font-weight:800;
+    flex:none;
+  }
+  .card .hint{
+    font-size:13px;
+    color:var(--muted);
+    margin:0 0 16px;
+    text-align:center;
+  }
+
+  /* ---------- Collection teaser ---------- */
+  .teaser{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    border:1px dashed var(--red);
+    border-radius:12px;
+    padding:14px 16px;
+    background:color-mix(in srgb, var(--red) 6%, var(--card));
+  }
+  .teaser-icon{
+    flex:none;
+    width:34px;height:34px;
+    border-radius:50%;
+    background:color-mix(in srgb, var(--red) 16%, var(--card));
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+  }
+  .teaser-body{ flex:1; }
+  .teaser-title{
+    font-size:13.5px;
+    font-weight:750;
+  }
+  .teaser-desc{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:3px;
+    line-height:1.5;
+  }
+
+  /* ---------- Form ---------- */
+  .fields{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field.full{ grid-column:1 / -1; }
+  label{
+    font-size:12.5px;
+    font-weight:650;
+    color:var(--muted);
+  }
+  input[type="text"], input[type="tel"], input[type="email"]{
+    width:100%;
+    font:inherit;
+    font-size:14.5px;
+    padding:11px 12px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    background:var(--paper);
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input::placeholder{ color:var(--muted); opacity:.6; }
+  input:focus-visible{
+    border-color:var(--focus);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 22%, transparent);
+  }
+  .errmsg{ font-size:12px; color:var(--red-deep); min-height:14px; }
+
+  .form-error{
+    margin-top:12px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--red-deep);
+    min-height:16px;
+    text-align:center;
+  }
+
+  button.submit{
+    margin-top:8px;
+    width:100%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    font-size:15px;
+    font-weight:750;
+    letter-spacing:.01em;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  button.submit:hover{ background:var(--red-deep); }
+  button.submit:active{ transform:scale(.99); }
+  button.submit:disabled{ opacity:.6; cursor:not-allowed; }
+
+  .footnote{
+    margin-top:14px;
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.5;
+    text-align:center;
+  }
+
+  /* ---------- Confirmation ---------- */
+  .confirm{ display:none; padding:34px 24px; text-align:center; }
+  .confirm.show{ display:block; }
+  .confirm .check{
+    width:52px;height:52px;
+    border-radius:50%;
+    background:var(--ok-bg);
+    color:var(--ok-fg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 16px;
+    font-size:24px;
+    font-weight:800;
+  }
+  .confirm h2{ font-size:19px; margin:0 0 8px; justify-content:center; }
+  .confirm p{ color:var(--muted); font-size:14px; line-height:1.6; margin:0 auto; max-width:38ch; }
+  .confirm .code{
+    display:inline-block;
+    margin-top:16px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;
+    letter-spacing:.04em;
+    background:var(--paper);
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:10px 16px;
+    font-size:13px;
+  }
+  .confirm-eyebrow{
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:4px;
+  }
+  .confirm-note{
+    margin-top:10px;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .confirm .again{
+    display:inline-block;
+    margin-top:20px;
+    font-size:13px;
+    font-weight:650;
+    color:var(--blue);
+    cursor:pointer;
+    background:none;
+    border:none;
+    font-family:inherit;
+  }
+
+  form.hide, .card.hide{ display:none; }
+
+  .legal{
+    margin-top:24px;
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.6;
+    max-width:52ch;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  @media (max-width:420px){
+    .fields{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="web-bg" aria-hidden="true">
+  <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
+</div>
+<div class="page">
+
+  <div class="brandbar">
+    <span class="logo-chip">
+      <img src="data:image/png;base64,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" alt="MINISO" />
+    </span>
+    <span class="tag">Colaboración oficial · MARVEL Spider-Man</span>
+  </div>
+
+  <div class="hero">
+    <div class="stamp-row">
+      <span class="stamp">Confidencial</span>
+      <span class="stamp">Piezas limitadas</span>
+      <span class="stamp">Acceso autorizado</span>
+    </div>
+    <div class="eyebrow">Expediente de reclutamiento</div>
+    <h1>Sé de los primeros en tener acceso a la <span>Nueva Colección de Spider-Man.</span></h1>
+    <p class="sub">Regístrate ahora y asegura tu <b>acceso anticipado</b> este sábado a la nueva colección MINISO x Spider-Man. Son <b>piezas limitadas</b> — quienes se registran aquí entran primero, antes que nadie.</p>
+    <div class="dates">
+      <span class="date-pill">Lanzamiento: <b>sábado 15 de agosto</b></span>
+      <span class="date-pill">Hora: <b>10:00 a.m.</b></span>
+      <span class="date-pill">Sede: <b>MINISO Metromall</b></span>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">--</div><div class="cd-label">días</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">horas</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">min</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">seg</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span>La colección</h2>
+    <p class="hint">Peluches, llaveros, tazas, mochilas y piezas coleccionables de edición limitada, inspirados en Spider-Man. Disponible en tienda a partir del sábado 15 de agosto — hasta agotar existencias.</p>
+    <div class="teaser">
+      <div class="teaser-icon">🕸️</div>
+      <div class="teaser-body">
+        <div class="teaser-title">Además, recibirás una tarjeta de misiones</div>
+        <div class="teaser-desc">Complétala y gana premios exclusivos. Muy pronto compartimos los detalles — por ahora, asegura tu lugar.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="formCard">
+    <h2><span class="num">2</span>Reserva tu acceso anticipado</h2>
+    <p class="hint">Te llegará un email con tu código de acceso intransferible para el sábado 15 de agosto.</p>
+
+    <form id="presaveForm" name="presave-spiderman" method="POST" novalidate>
+      <p style="position:absolute; left:-9999px;">
+        <label>No llenar: <input name="empresa" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <div class="fields">
+        <div class="field full">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ej. Ana Pérez" autocomplete="name" />
+          <div class="errmsg" data-err="nombre"></div>
+        </div>
+        <div class="field">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="6000-0000" autocomplete="tel" inputmode="tel" />
+          <div class="errmsg" data-err="telefono"></div>
+        </div>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" />
+          <div class="errmsg" data-err="email"></div>
+        </div>
+      </div>
+
+      <input type="hidden" name="tienda" value="Metromall" />
+
+      <button type="submit" class="submit" id="submitBtn">Reservar mi acceso anticipado</button>
+      <p class="form-error" id="formError"></p>
+      <p class="footnote">Al registrarte aceptas ser contactado por MINISO Panamá para confirmar tu acceso anticipado del sábado 15 de agosto.</p>
+    </form>
+  </div>
+
+  <div class="card confirm" id="confirmCard">
+    <div class="check">🕷️</div>
+    <div class="confirm-eyebrow">Acceso concedido</div>
+    <h2>Bienvenido a la red, agente.</h2>
+    <p>Tu lugar quedó asegurado. Revisa tu correo — ahí te llegará tu código de acceso <b>intransferible</b> para entrar primero el sábado 15 de agosto.</p>
+    <div class="code" id="confirmCode"></div>
+    <p class="confirm-note">Guarda este código. Es único y no se repite.</p>
+    <button class="again" id="againBtn" type="button">Registrar a otro agente</button>
+  </div>
+
+  <p class="legal">MINISO x Spider-Man es una colaboración oficial bajo licencia de MARVEL. Promoción válida en tiendas MINISO participantes de Panamá. Aplican términos y condiciones.</p>
+
+</div>
+
+<script>
+(function(){
+  // ---------- Countdown to Saturday Aug 15, 2026, 10:00 AM (Panama, UTC-5) ----------
+  var target = new Date("2026-08-15T10:00:00-05:00").getTime();
+  var cdEl = document.getElementById("countdown");
+  var elD = document.getElementById("cd-days");
+  var elH = document.getElementById("cd-hours");
+  var elM = document.getElementById("cd-mins");
+  var elS = document.getElementById("cd-secs");
+
+  function tick(){
+    var now = Date.now();
+    var diff = target - now;
+    if(diff <= 0){
+      elD.textContent = "0"; elH.textContent = "0"; elM.textContent = "0"; elS.textContent = "0";
+      cdEl.classList.add("live");
+      clearInterval(timer);
+      return;
+    }
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    elD.textContent = d; elH.textContent = h; elM.textContent = m; elS.textContent = s;
+  }
+  tick();
+  var timer = setInterval(tick, 1000);
+
+  // ---------- Form validation + submit ----------
+  var form = document.getElementById("presaveForm");
+  var submitBtn = document.getElementById("submitBtn");
+  var formError = document.getElementById("formError");
+
+  function setErr(field, msg){
+    var el = form.querySelector('[data-err="' + field + '"]');
+    if(el) el.textContent = msg || "";
+  }
+
+  function validate(){
+    var ok = true;
+    var nombre = form.nombre.value.trim();
+    var telefono = form.telefono.value.trim();
+    var email = form.email.value.trim();
+
+    setErr("nombre",""); setErr("telefono",""); setErr("email","");
+
+    if(nombre.length < 3){ setErr("nombre","Escribe tu nombre completo."); ok = false; }
+    if(telefono.replace(/[^0-9]/g,"").length < 7){ setErr("telefono","Ingresa un teléfono válido."); ok = false; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr("email","Ingresa un correo válido."); ok = false; }
+
+    return ok;
+  }
+
+  // Código único: marca de tiempo en base36 (siempre creciente, nunca se repite
+  // dentro del mismo milisegundo entre envíos) + bloque aleatorio de respaldo.
+  function genCode(){
+    var time = Date.now().toString(36).toUpperCase();
+    var rand = Math.random().toString(36).slice(2,6).toUpperCase();
+    return "MN-SPD-" + time + "-" + rand;
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    formError.textContent = "";
+    if(!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Reservando…";
+
+    var code = genCode();
+
+    var payload = {
+      nombre: form.nombre.value.trim(),
+      telefono: form.telefono.value.trim(),
+      email: form.email.value.trim(),
+      tienda: "Metromall",
+      codigo: code,
+      empresa: form.empresa.value
+    };
+
+    fetch("/.netlify/functions/presave", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if(!res.ok) throw new Error("bad status");
+      return res.json();
+    }).then(function(){
+      document.getElementById("confirmCode").textContent = code;
+      document.getElementById("formCard").classList.add("hide");
+      document.getElementById("confirmCard").classList.add("show");
+      form.reset();
+    }).catch(function(){
+      formError.textContent = "No pudimos completar tu registro. Intenta de nuevo.";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Reservar mi acceso anticipado";
+    });
+  });
+
+  document.getElementById("againBtn").addEventListener("click", function(){
+    document.getElementById("confirmCard").classList.remove("show");
+    document.getElementById("formCard").classList.remove("hide");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Reservar mi acceso anticipado";
+  });
+})();
+</script>
+</body>
+</html>

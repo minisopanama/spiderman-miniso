@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[build.environment]
+  # Datos de cuenta, no secretos, por eso viven aquí. El API KEY de ActiveCampaign
+  # SÍ es secreto: se configura en Netlify → Site settings → Environment variables,
+  # nunca en este archivo.
+  AC_LIST_ID = "4"
+  AC_API_URL = "https://remasterholdings58124.api-us1.com"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
