@@ -65,47 +65,19 @@
   /* ---------- Header / brand bar ---------- */
   .brandbar{
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:10px;
-    background:linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
-    color:#fff;
-    border-radius:14px;
-    padding:18px 20px;
-    box-shadow:var(--shadow);
-    position:relative;
-    overflow:hidden;
-  }
-  .brandbar::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image: radial-gradient(circle at 20% 120%, rgba(255,255,255,.15), transparent 45%),
-                       radial-gradient(circle at 90% -20%, rgba(255,255,255,.12), transparent 40%);
-    pointer-events:none;
-  }
-  .logo-chip{
     background:#fff;
-    border-radius:10px;
-    padding:7px 14px;
-    display:inline-flex;
-    align-items:center;
-    line-height:0;
-    position:relative;
-    z-index:1;
+    border-radius:14px;
+    border-bottom:3px solid var(--red);
+    padding:22px 20px;
+    box-shadow:var(--shadow);
   }
-  .logo-chip img{ height:20px; width:auto; display:block; }
-  .brandbar .tag{
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    background:rgba(255,255,255,.18);
-    padding:5px 12px;
-    border-radius:999px;
-    position:relative;
-    z-index:1;
+  .brandbar img{
+    display:block;
+    height:auto;
+    width:220px;
+    max-width:100%;
   }
 
   .hero{ margin-top:26px; }
@@ -423,10 +395,7 @@
 <div class="page">
 
   <div class="brandbar">
-    <span class="logo-chip">
-      <img src="data:image/png;base64,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" alt="MINISO" />
-    </span>
-    <span class="tag">Colaboración oficial · MARVEL Spider-Man</span>
+    <img src="https://remasterholdings58124.activehosted.com/content/VpglLN/2026/08/13/b8838b1e-c6b0-4bea-884c-51202abeb811.png" alt="MINISO x Spider-Man" />
   </div>
 
   <div class="hero">
